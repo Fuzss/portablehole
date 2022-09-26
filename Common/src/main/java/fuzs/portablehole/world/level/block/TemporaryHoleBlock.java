@@ -81,10 +81,10 @@ public class TemporaryHoleBlock extends BaseEntityBlock {
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (!PortableHole.CONFIG.get(ServerConfig.class).sparkParticles) return;
         if (level.getBlockEntity(pos) instanceof TemporaryHoleBlockEntity blockEntity) {
-            if (blockEntity.sourceState != null) {
+            if (blockEntity.getSourceBlockState() != null) {
                 int color = ChatFormatting.BLUE.getColor();
                 SparkleParticleData sparkle = SparkleParticleData.noClip(1.0F, (color >> 16 & 0xFF) / 255.0F, (color >> 8 & 0xFF) / 255.0F, (color & 0xFF) / 255.0F, 20);
-                VoxelShape occlusionShape = blockEntity.sourceState.getShape(level, pos);
+                VoxelShape occlusionShape = blockEntity.getSourceBlockState().getShape(level, pos);
                 occlusionShape.forAllEdges((x0, y0, z0, x1, y1, z1) -> {
                     Vec3 from = new Vec3(x0, y0, z0);
                     Vec3 to = new Vec3(x1, y1, z1);

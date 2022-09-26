@@ -11,6 +11,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Clearable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -19,11 +20,14 @@ import org.jetbrains.annotations.Nullable;
 
 public class TemporaryHoleBlockEntity extends BlockEntity {
     private static final String TAG_BLOCK_STATE_SOURCE = "SourceState";
+    private static final String TAG_BLOCK_ENTITY_SOURCE_TAG = "SourceEntityTag";
     private static final String TAG_LIFETIME_TICKS = "LifetimeTicks";
     private static final String TAG_GROWTH_DIRECTION = "GrowthDirection";
     private static final String TAG_GROWTH_DISTANCE = "GrowthDistance";
 
-    public BlockState sourceState;
+    private BlockState sourceState;
+    @Nullable
+    private CompoundTag blockEntityTag;
     private int lifetimeTicks;
     private Direction growthDirection;
     private int growthDistance;
@@ -37,6 +41,9 @@ public class TemporaryHoleBlockEntity extends BlockEntity {
         super.saveAdditional(tag);
         if (this.sourceState != null) {
             tag.put(TAG_BLOCK_STATE_SOURCE, NbtUtils.writeBlockState(this.sourceState));
+        }
+        if (this.blockEntityTag != null) {
+            tag.put(TAG_BLOCK_ENTITY_SOURCE_TAG, this.blockEntityTag);
         }
         tag.putInt(TAG_LIFETIME_TICKS, this.lifetimeTicks);
         if (this.growthDirection != null) {
@@ -55,6 +62,9 @@ public class TemporaryHoleBlockEntity extends BlockEntity {
             if (this.sourceState.isAir()) {
                 this.sourceState = null;
             }
+        }
+        if (tag.contains(TAG_BLOCK_ENTITY_SOURCE_TAG, Tag.TAG_COMPOUND)) {
+            this.blockEntityTag = tag.getCompound(TAG_BLOCK_ENTITY_SOURCE_TAG);
         }
         this.lifetimeTicks = tag.getInt(TAG_LIFETIME_TICKS);
         if (tag.contains(TAG_GROWTH_DIRECTION, Tag.TAG_BYTE)) {
@@ -78,11 +88,18 @@ public class TemporaryHoleBlockEntity extends BlockEntity {
         return tag;
     }
 
+    public BlockState getSourceBlockState() {
+        return this.sourceState;
+    }
+
     public static void serverTick(Level level, BlockPos pos, BlockState state, TemporaryHoleBlockEntity blockEntity) {
         if (blockEntity.sourceState == null) {
             level.removeBlock(pos, false);
         } else if (blockEntity.lifetimeTicks <= 0) {
             level.setBlock(pos, blockEntity.sourceState, 3);
+            if (blockEntity.blockEntityTag != null && level.getBlockEntity(pos) != null) {
+                level.getBlockEntity(pos).load(blockEntity.blockEntityTag);
+            }
             if (PortableHole.CONFIG.get(ServerConfig.class).particlesForReappearingBlocks) {
                 // plays the block breaking sound to provide some feedback
                 level.levelEvent(LevelEvent.PARTICLES_DESTROY_BLOCK, pos, Block.getId(blockEntity.sourceState));
@@ -104,6 +121,14 @@ public class TemporaryHoleBlockEntity extends BlockEntity {
     public static boolean setTemporaryHoleBlock(Level level, BlockPos pos, Direction growthDirection, int growthDistance) {
         if (isValidHolePosition(level, pos)) {
             BlockState state = level.getBlockState(pos);
+            CompoundTag blockEntityTag = null;
+            if (PortableHole.CONFIG.get(ServerConfig.class).replaceBlockEntities) {
+                BlockEntity blockentity = level.getBlockEntity(pos);
+                if (blockentity != null) {
+                    blockEntityTag = blockentity.saveWithoutMetadata();
+                    Clearable.tryClear(blockentity);
+                }
+            }
             boolean replaceBlock = !state.is(ModRegistry.TEMPORARY_HOLE_BLOCK.get());
             if (replaceBlock) {
                 level.setBlock(pos, ModRegistry.TEMPORARY_HOLE_BLOCK.get().defaultBlockState(), 3);
@@ -111,6 +136,7 @@ public class TemporaryHoleBlockEntity extends BlockEntity {
             if (level.getBlockEntity(pos) instanceof TemporaryHoleBlockEntity blockEntity) {
                 if (replaceBlock) {
                     blockEntity.sourceState = state;
+                    blockEntity.blockEntityTag = blockEntityTag;
                 }
                 blockEntity.growthDirection = growthDirection;
                 blockEntity.growthDistance = growthDistance;
@@ -126,7 +152,7 @@ public class TemporaryHoleBlockEntity extends BlockEntity {
         if (level.hasChunkAt(pos) && level.isInWorldBounds(pos)) {
             if (state.is(ModRegistry.TEMPORARY_HOLE_BLOCK.get())) {
                 return true;
-            } else if (!state.isAir() && !state.hasBlockEntity() && !state.is(ModRegistry.PORTABLE_HOLE_IMMUNE_TAG)) {
+            } else if (!state.isAir() && (!state.hasBlockEntity() || PortableHole.CONFIG.get(ServerConfig.class).replaceBlockEntities) && !state.is(ModRegistry.PORTABLE_HOLE_IMMUNE_TAG)) {
                 Block block = state.getBlock();
                 if (block instanceof DoublePlantBlock || block instanceof DoorBlock || block instanceof BedBlock) {
                     return false;

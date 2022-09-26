@@ -17,10 +17,12 @@ public class ServerConfig implements ConfigCore {
     public int temporaryHoleDuration = 100;
     @Config(description = {"Maximum block hardness a portable hole can replace.", "Check out the Minecraft Wiki for more information: https://minecraft.fandom.com/wiki/Breaking#Blocks_by_hardness"})
     public double maxBlockHardness = 20.0;
-    @Config(description = {"Render spark particles to indicate the block replaced by a temporary hole.", PERFORMANCE_DISCLAIMER})
+    @Config(category = "visuals", description = {"Render spark particles to indicate the block replaced by a temporary hole.", PERFORMANCE_DISCLAIMER})
     public boolean sparkParticles = true;
-    @Config(description = "Render the end portal overlay on the outside of a temporary hole.")
+    @Config(category = "visuals", description = "Render the end portal overlay on the outside of a temporary hole.")
     public boolean portalOverlay = true;
-    @Config(description = {"Play a breaking sound and show particles when blocks reappear from a temporary hole.", PERFORMANCE_DISCLAIMER})
+    @Config(category = "visuals", description = {"Play a breaking sound and show particles when blocks reappear from a temporary hole.", PERFORMANCE_DISCLAIMER})
     public boolean particlesForReappearingBlocks = true;
+    @Config(description = "Allow portable holes to go through block entities. Not safe to use (e.g. breaks double chests), therefore disabled by default.")
+    public boolean replaceBlockEntities = false;
 }
