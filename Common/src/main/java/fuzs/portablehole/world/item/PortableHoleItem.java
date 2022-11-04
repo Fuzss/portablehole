@@ -7,6 +7,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class PortableHoleItem extends Item {
-    private static final Component TOOLTIP_DESCRIPTION_COMPONENT = Component.translatable("item.portablehole.portable_hole.description").withStyle(ChatFormatting.GRAY);
+    private static final Component TOOLTIP_DESCRIPTION_COMPONENT = new TranslatableComponent("item.portablehole.portable_hole.description").withStyle(ChatFormatting.GRAY);
 
     public PortableHoleItem(Properties p_41383_) {
         super(p_41383_);

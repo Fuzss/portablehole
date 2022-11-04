@@ -29,7 +29,7 @@ public class ModRegistry {
     private static final RegistryManager REGISTRY = CoreServices.FACTORIES.registration(PortableHole.MOD_ID);
     public static final RegistryReference<Block> TEMPORARY_HOLE_BLOCK = REGISTRY.whenNotOn(ModLoader.FORGE).registerBlock("temporary_hole", () -> new TemporaryHoleBlock(BlockBehaviour.Properties.of(Material.PORTAL, MaterialColor.COLOR_BLACK).noCollission().lightLevel((p_50854_) -> {
         return 15;
-    }).strength(-1.0F, 3600000.0F).noLootTable()));
+    }).strength(-1.0F, 3600000.0F).noDrops()));
     public static final RegistryReference<Item> PORTABLE_HOLE_ITEM = REGISTRY.registerItem("portable_hole", () -> new PortableHoleItem(new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS).rarity(Rarity.UNCOMMON)));
     public static final RegistryReference<BlockEntityType<TemporaryHoleBlockEntity>> TEMPORARY_HOLE_BLOCK_ENTITY_TYPE = REGISTRY.registerBlockEntityTypeBuilder("temporary_hole", () -> ModBlockEntityTypeBuilder.of(TemporaryHoleBlockEntity::new, TEMPORARY_HOLE_BLOCK.get()));
     public static final RegistryReference<ParticleType<SparkleParticleData>> SPARK_PARTICLE_TYPE = REGISTRY.register(Registry.PARTICLE_TYPE_REGISTRY, "sparkle", () -> new SparkleParticleType());

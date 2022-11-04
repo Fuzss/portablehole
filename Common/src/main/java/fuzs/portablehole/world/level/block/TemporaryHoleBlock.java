@@ -7,7 +7,6 @@ import fuzs.portablehole.init.ModRegistry;
 import fuzs.portablehole.world.level.block.entity.TemporaryHoleBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -23,6 +22,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Random;
 
 public class TemporaryHoleBlock extends BaseEntityBlock {
 
@@ -78,7 +79,7 @@ public class TemporaryHoleBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
         if (!PortableHole.CONFIG.get(ServerConfig.class).sparkParticles) return;
         if (level.getBlockEntity(pos) instanceof TemporaryHoleBlockEntity blockEntity) {
             if (blockEntity.getSourceBlockState() != null) {

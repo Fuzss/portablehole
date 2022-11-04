@@ -14,7 +14,7 @@ public class ModRegistryForge {
     private static final RegistryManager REGISTRY = CoreServices.FACTORIES.registration(PortableHole.MOD_ID);
     public static final RegistryReference<Block> TEMPORARY_HOLE_BLOCK = REGISTRY.registerBlock("temporary_hole", () -> new TemporaryHoleForgeBlock(BlockBehaviour.Properties.of(Material.PORTAL, MaterialColor.COLOR_BLACK).noCollission().lightLevel((p_50854_) -> {
         return 15;
-    }).strength(-1.0F, 3600000.0F).noLootTable()));
+    }).strength(-1.0F, 3600000.0F).noDrops()));
 
     public static void touch() {
 
