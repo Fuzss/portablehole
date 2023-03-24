@@ -24,6 +24,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class TemporaryHoleBlock extends BaseEntityBlock {
 
     public TemporaryHoleBlock(Properties p_49795_) {

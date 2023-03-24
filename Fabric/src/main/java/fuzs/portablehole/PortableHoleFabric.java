@@ -1,12 +1,12 @@
 package fuzs.portablehole;
 
-import fuzs.puzzleslib.core.CoreServices;
+import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import net.fabricmc.api.ModInitializer;
 
 public class PortableHoleFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        CoreServices.FACTORIES.modConstructor(PortableHole.MOD_ID).accept(new PortableHole());
+        ModConstructor.construct(PortableHole.MOD_ID, PortableHole::new);
     }
 }

@@ -1,7 +1,7 @@
 package fuzs.portablehole.client;
 
 import fuzs.portablehole.PortableHole;
-import fuzs.puzzleslib.client.core.ClientCoreServices;
+import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -12,6 +12,6 @@ public class PortableHoleForgeClient {
 
     @SubscribeEvent
     public static void onConstructMod(final FMLConstructModEvent evt) {
-        ClientCoreServices.FACTORIES.clientModConstructor(PortableHole.MOD_ID).accept(new PortableHoleClient());
+        ClientModConstructor.construct(PortableHole.MOD_ID, PortableHoleClient::new);
     }
 }

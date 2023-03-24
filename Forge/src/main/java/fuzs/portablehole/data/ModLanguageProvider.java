@@ -1,18 +1,18 @@
 package fuzs.portablehole.data;
 
 import fuzs.portablehole.init.ModRegistry;
-import net.minecraft.data.DataGenerator;
-import net.minecraftforge.common.data.LanguageProvider;
+import fuzs.puzzleslib.api.data.v1.AbstractLanguageProvider;
+import net.minecraft.data.PackOutput;
 
-public class ModLanguageProvider extends LanguageProvider {
+public class ModLanguageProvider extends AbstractLanguageProvider {
 
-    public ModLanguageProvider(DataGenerator gen, String modId) {
-        super(gen, modId, "en_us");
+    public ModLanguageProvider(PackOutput packOutput, String modId) {
+        super(packOutput, modId);
     }
 
     @Override
     protected void addTranslations() {
         this.add(ModRegistry.PORTABLE_HOLE_ITEM.get(), "Portable Hole");
-        this.add("item.portablehole.portable_hole.description", "Click on a block and see what happens!");
+        this.addAdditional(ModRegistry.PORTABLE_HOLE_ITEM.get(), "description", "Click on a block and see what happens!");
     }
 }

@@ -5,6 +5,9 @@ import fuzs.portablehole.config.ServerConfig;
 import fuzs.portablehole.init.ModRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
@@ -58,7 +61,8 @@ public class TemporaryHoleBlockEntity extends BlockEntity {
     public void load(CompoundTag tag) {
         super.load(tag);
         if (tag.contains(TAG_BLOCK_STATE_SOURCE, Tag.TAG_COMPOUND)) {
-            this.sourceState = NbtUtils.readBlockState(tag.getCompound(TAG_BLOCK_STATE_SOURCE));
+            HolderGetter<Block> holdergetter = this.level != null ? this.level.holderLookup(Registries.BLOCK) : BuiltInRegistries.BLOCK.asLookup();
+            this.sourceState = NbtUtils.readBlockState(holdergetter, tag.getCompound(TAG_BLOCK_STATE_SOURCE));
             if (this.sourceState.isAir()) {
                 this.sourceState = null;
             }

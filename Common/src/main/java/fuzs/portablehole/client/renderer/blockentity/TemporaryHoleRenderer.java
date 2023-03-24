@@ -2,7 +2,6 @@ package fuzs.portablehole.client.renderer.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
 import fuzs.portablehole.PortableHole;
 import fuzs.portablehole.config.ServerConfig;
 import fuzs.portablehole.world.level.block.entity.TemporaryHoleBlockEntity;
@@ -13,6 +12,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
+import org.joml.Matrix4f;
 
 public class TemporaryHoleRenderer implements BlockEntityRenderer<TemporaryHoleBlockEntity> {
 

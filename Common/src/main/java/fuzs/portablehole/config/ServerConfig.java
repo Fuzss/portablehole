@@ -1,7 +1,7 @@
 package fuzs.portablehole.config;
 
-import fuzs.puzzleslib.config.ConfigCore;
-import fuzs.puzzleslib.config.annotation.Config;
+import fuzs.puzzleslib.api.config.v3.Config;
+import fuzs.puzzleslib.api.config.v3.ConfigCore;
 
 public class ServerConfig implements ConfigCore {
     private static final String PERFORMANCE_DISCLAIMER = "May want to disable this feature to increase performance when a large hole depth is set.";

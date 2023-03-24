@@ -13,7 +13,7 @@ import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import fuzs.portablehole.client.core.ClientModServices;
+import fuzs.portablehole.client.core.ClientAbstractions;
 import fuzs.portablehole.core.particles.SparkleParticleData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -157,13 +157,13 @@ public class FXSparkle extends TextureSheetParticle {
 		RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 		RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES);
 		AbstractTexture tex = textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES);
-		ClientModServices.ABSTRACTIONS.setFilterSave(tex, true, false);
+		ClientAbstractions.INSTANCE.setFilterSave(tex, true, false);
 		buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
 	}
 
 	private static void endRenderCommon() {
 		AbstractTexture tex = Minecraft.getInstance().getTextureManager().getTexture(TextureAtlas.LOCATION_PARTICLES);
-		ClientModServices.ABSTRACTIONS.restoreLastFilter(tex);
+		ClientAbstractions.INSTANCE.restoreLastFilter(tex);
 		RenderSystem.disableBlend();
 		RenderSystem.depthMask(true);
 	}

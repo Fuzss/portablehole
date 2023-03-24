@@ -1,25 +1,21 @@
 package fuzs.portablehole.data;
 
 import fuzs.portablehole.init.ModRegistry;
-import net.minecraft.core.Registry;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.TagsProvider;
-import net.minecraft.world.level.block.Block;
+import fuzs.puzzleslib.api.data.v1.AbstractTagProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-public class ModBlockTagsProvider extends TagsProvider<Block> {
+import java.util.concurrent.CompletableFuture;
 
-    public ModBlockTagsProvider(DataGenerator dataGenerator, String modId, ExistingFileHelper fileHelperIn) {
-        super(dataGenerator, Registry.BLOCK, modId, fileHelperIn);
+public class ModBlockTagsProvider extends AbstractTagProvider.Blocks {
+
+    public ModBlockTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId, ExistingFileHelper fileHelper) {
+        super(packOutput, lookupProvider, modId, fileHelper);
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(HolderLookup.Provider provider) {
         this.tag(ModRegistry.PORTABLE_HOLE_IMMUNE_TAG);
-    }
-
-    @Override
-    public String getName() {
-        return "Block Tags";
     }
 }
