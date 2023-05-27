@@ -23,7 +23,7 @@ public class PortableHoleClient implements ClientModConstructor {
 
     @Override
     public void onBuildCreativeModeTabContents(BuildCreativeModeTabContentsContext context) {
-        context.registerBuildListener(CreativeModeTabs.TOOLS_AND_UTILITIES, (featureFlagSet, output, bl) -> {
+        context.registerBuildListener(CreativeModeTabs.TOOLS_AND_UTILITIES, (itemDisplayParameters, output) -> {
             output.accept(ModRegistry.PORTABLE_HOLE_ITEM.get());
         });
     }

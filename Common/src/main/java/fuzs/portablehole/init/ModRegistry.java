@@ -30,7 +30,7 @@ public class ModRegistry {
     public static final RegistryReference<Item> PORTABLE_HOLE_ITEM = REGISTRY.registerItem("portable_hole", () -> new PortableHoleItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final RegistryReference<BlockEntityType<TemporaryHoleBlockEntity>> TEMPORARY_HOLE_BLOCK_ENTITY_TYPE = REGISTRY.registerBlockEntityType("temporary_hole", () -> BlockEntityType.Builder.of(TemporaryHoleBlockEntity::new, TEMPORARY_HOLE_BLOCK.get()));
     public static final RegistryReference<ParticleType<SparkleParticleData>> SPARK_PARTICLE_TYPE = REGISTRY.register(Registries.PARTICLE_TYPE, "sparkle", () -> new SparkleParticleType());
-    public static final TagKey<Block> PORTABLE_HOLE_IMMUNE_TAG = REGISTRY.createBlockTag("portable_hole_immune");
+    public static final TagKey<Block> PORTABLE_HOLE_IMMUNE_TAG = REGISTRY.registerBlockTag("portable_hole_immune");
 
     public static final ResourceLocation STRONGHOLD_CORRIDOR_INJECT_LOOT_TABLE = new ResourceLocation(PortableHole.MOD_ID, "inject/" + BuiltInLootTables.STRONGHOLD_CORRIDOR.getPath());
 

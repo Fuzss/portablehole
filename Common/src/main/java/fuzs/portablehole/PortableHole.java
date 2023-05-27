@@ -4,7 +4,7 @@ import fuzs.portablehole.config.ServerConfig;
 import fuzs.portablehole.init.ModRegistry;
 import fuzs.puzzleslib.api.config.v3.ConfigHolder;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
-import fuzs.puzzleslib.api.event.v1.LootTableLoadEvents;
+import fuzs.puzzleslib.api.event.v1.server.LootTableLoadEvents;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootTableReference;
