@@ -18,15 +18,15 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 
 public class ModRegistry {
     static final RegistryManager REGISTRY = RegistryManager.instant(PortableHole.MOD_ID);
-    public static final RegistryReference<Block> TEMPORARY_HOLE_BLOCK = REGISTRY.whenNotOn(ModLoader.FORGE).registerBlock("temporary_hole", () -> new TemporaryHoleBlock(BlockBehaviour.Properties.of(Material.PORTAL, MaterialColor.COLOR_BLACK).noCollission().lightLevel((p_50854_) -> {
+    public static final RegistryReference<Block> TEMPORARY_HOLE_BLOCK = REGISTRY.whenNotOn(ModLoader.FORGE).registerBlock("temporary_hole", () -> new TemporaryHoleBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).noCollission().lightLevel((p_50854_) -> {
         return 15;
-    }).strength(-1.0F, 3600000.0F).noLootTable()));
+    }).strength(-1.0F, 3600000.0F).noLootTable().pushReaction(PushReaction.BLOCK)));
     public static final RegistryReference<Item> PORTABLE_HOLE_ITEM = REGISTRY.registerItem("portable_hole", () -> new PortableHoleItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final RegistryReference<BlockEntityType<TemporaryHoleBlockEntity>> TEMPORARY_HOLE_BLOCK_ENTITY_TYPE = REGISTRY.registerBlockEntityType("temporary_hole", () -> BlockEntityType.Builder.of(TemporaryHoleBlockEntity::new, TEMPORARY_HOLE_BLOCK.get()));
     public static final RegistryReference<ParticleType<SparkleParticleData>> SPARK_PARTICLE_TYPE = REGISTRY.register(Registries.PARTICLE_TYPE, "sparkle", () -> new SparkleParticleType());
