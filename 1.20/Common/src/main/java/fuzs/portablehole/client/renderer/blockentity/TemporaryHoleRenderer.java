@@ -6,7 +6,6 @@ import fuzs.portablehole.PortableHole;
 import fuzs.portablehole.config.ServerConfig;
 import fuzs.portablehole.world.level.block.entity.TemporaryHoleBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
@@ -24,7 +23,7 @@ public class TemporaryHoleRenderer implements BlockEntityRenderer<TemporaryHoleB
    public void render(TemporaryHoleBlockEntity blockEntity, float p_112651_, PoseStack poseStack, MultiBufferSource multiBufferSource, int p_112654_, int p_112655_) {
       if (!PortableHole.CONFIG.get(ServerConfig.class).portalOverlay) return;
       Matrix4f matrix4f = poseStack.last().pose();
-      this.renderCube(blockEntity, matrix4f, multiBufferSource.getBuffer(RenderType.endGateway()));
+      this.renderCube(blockEntity, matrix4f, multiBufferSource.getBuffer(ModRenderType.TEMPORARY_HOLE));
    }
 
    private void renderCube(TemporaryHoleBlockEntity blockEntity, Matrix4f matrix4f, VertexConsumer vertexConsumer) {

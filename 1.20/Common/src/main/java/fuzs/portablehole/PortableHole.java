@@ -6,6 +6,7 @@ import fuzs.puzzleslib.api.config.v3.ConfigHolder;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.api.core.v1.context.BuildCreativeModeTabContentsContext;
 import fuzs.puzzleslib.api.event.v1.server.LootTableLoadEvents;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -40,5 +41,9 @@ public class PortableHole implements ModConstructor {
         context.registerBuildListener(CreativeModeTabs.TOOLS_AND_UTILITIES, (itemDisplayParameters, output) -> {
             output.accept(ModRegistry.PORTABLE_HOLE_ITEM.get());
         });
+    }
+
+    public static ResourceLocation id(String name) {
+        return new ResourceLocation(MOD_ID, name);
     }
 }
